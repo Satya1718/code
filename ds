@@ -1,0 +1,317 @@
+//10.queue using link list;
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct node{
+    int data;
+    struct node*link;
+}Q;
+
+Q*front=NULL;
+Q*rear=NULL;
+
+
+void insert(int x){
+    printf("enter the data");
+    scanf("%d",&x);
+    Q* New=malloc(sizeof(Q*));
+    New->data=x;
+    New->link=NULL;
+
+    if((front==NULL) && (rear==NULL)){
+        front=rear=New;
+    }
+    else{
+        rear->link=New;
+        rear=rear->link;
+    }
+}
+int delete(){
+    int x;
+    printf("%d deleted data from node",front->data);
+    if((front==NULL) &&( rear==NULL)){
+        printf("node is Empty");
+    }
+    else{
+       front=front->link;
+    }
+    return x;
+}
+
+void display(){
+    Q*temp=front;
+    if((front==NULL)&&(rear==NULL)){
+        printf("node is Empty");
+    }
+    else{
+        while(temp!=NULL){
+        
+            printf("\t->%d",temp->data);
+            temp=temp->link;}
+        
+    }
+}
+
+int main(){
+    int x,choice;
+
+    while(1){
+    printf("\n 1.insert\t2.delete\t 3.display\t 4.Exit\n");
+    printf("Enter your choice ");
+    scanf("%d",&choice);
+
+    switch (choice){
+        case 1:
+        insert(x);
+        break;
+
+        case 2: delete();
+        break;
+
+        case 3:display();
+        break;
+
+        case 4:
+        break;
+
+        default: printf("invalid choice");
+        break;
+
+    }
+    }
+    return 0;
+}
+//9.string reversal
+   
+#include<stdio.h>
+#include<string.h>
+#define max 5
+
+char stack[max];
+int top=-1;
+
+char push (char ch){
+    if(top==max-1){
+        printf("stack is full");
+    }
+    else{
+        top=top+1;
+        stack[top]=ch;
+    }
+}
+
+char pop(){
+    char ch;
+    if(top==-1){
+        printf("stack is Empty");
+    }
+    else{
+        ch= stack[top];
+        top=top-1;
+    }
+    return ch; 
+}
+ int main(){
+    char str[max];
+    printf("Enter the str ");
+    scanf("%s",&str);
+
+    for(int i=0;i<strlen(str);i++){
+        push(str[i]);
+    }
+    for(int i=0;i<strlen(str);i++){
+        str[i]=pop();
+    }
+    printf("\n string reversal  %s",str);
+    return 0;
+
+
+ }
+//8.student database
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 3
+
+// Define the structure for student database
+struct student_database {
+    int Roll_no;
+    char Name[20];
+    float Mark;
+};
+
+// Declare an array of structures
+struct student_database stu[MAX];
+
+// Function to create student records
+void Create() {
+    printf("Enter Student Database\n");
+    for (int i = 0; i < MAX; i++) {
+        printf("\nEnter the Roll_no of student: ");
+        scanf("%d", &stu[i].Roll_no);
+        printf("Enter the Name of student: ");
+        scanf("%s", stu[i].Name);  // No need for & for arrays
+        printf("Enter the Marks of student: ");
+        scanf("%f", &stu[i].Mark);
+    }
+}
+
+// Function to display all student records
+void Display() {
+    printf("\nStudent Database:\n");
+    printf("Roll No\tName\tMarks\n");
+    for (int i = 0; i < MAX; i++) {
+        printf("%d\t%s\t%.2f\n", stu[i].Roll_no, stu[i].Name, stu[i].Mark);
+    }
+}
+
+//Function to Search  student Roll no and display info.
+void search (){
+    printf("Enter the  Searching Roll No ");
+    int a,i;
+    int flag=0;
+    scanf("%d",&a);
+    for( i=0;i<MAX;i++){
+        if(stu[i].Roll_no==a){
+            printf("%d\t%s\t%.2f\n", stu[i].Roll_no, stu[i].Name, stu[i].Mark);
+            flag=1;
+        }
+    }
+    if(flag==1){
+        printf("Roll no. is found\n");
+    }
+    else{
+        printf("Roll no is  not found\n");
+    }
+}
+
+//Function to Sort  student Roll no .
+void sort(){
+    printf("displaying the student database sorted by roll no\n");
+    for(int i=0;i<MAX-1;i++){
+        for(int j=0;j<MAX-i-1;j++){
+            if(stu[j].Mark < stu[j+1].Mark){
+                int temp =stu[j].Mark;
+                stu[j].Mark=stu[j+1].Mark;
+                stu[j+1].Mark=temp;
+            }
+        }
+    }
+    for (int p = 0; p < MAX; p++) {
+        printf("%d\t%s\t%.2f\n", stu[p].Roll_no, stu[p].Name, stu[p].Mark);
+        
+    }
+
+}
+
+int main() {
+    int choice;
+    
+    while(1){
+        // Display menu
+        printf("\nStudent Database Management System\n");
+        printf("1. Create Student Records\n");
+        printf("2. Display Student Records\n");
+        printf("3. Search Roll no\n");
+        printf("4. Sort by Marks \n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        
+        switch (choice) {
+            case 1:
+                Create();
+                break;
+            case 2:
+                Display();
+                break;
+            case 3:
+                search();
+                break;  
+            case 4:
+                sort();
+                break;     
+            case 5:
+                printf("Exiting program.\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+        
+    } 
+    
+    return 0;
+}
+//7.star
+#include <stdio.h>
+
+int main(){
+    int i,j,k,n;
+    printf("enter the no");
+    scanf("%d",&n);
+
+    for( i=1;i<=n;i++){
+        for( j=1;j<=n-i;j++){
+            printf(" ");
+        }
+        for (k = 1; k <=2*i-1; k++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+    return 0;
+}
+
+
+//extra matrices
+#include <stdio.h>
+
+#define ROWS 1
+#define COLS 3
+
+// Function to add two 1x3 matrices
+void addMatrices(int mat1[ROWS][COLS], int mat2[ROWS][COLS], int result[ROWS][COLS]) {
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            // Add corresponding elements from mat1 and mat2
+            result[i][j] = mat1[i][j] + mat2[i][j];
+        }
+    }
+}
+
+// Function to display a 1x3 matrix
+void displayMatrix(int mat[ROWS][COLS]) {
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            printf("%d\t", mat[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int matrix1[ROWS][COLS] = {{1, 2, 3}};  // 1x3 matrix
+    int matrix2[ROWS][COLS] = {{4, 5, 6}};  // 1x3 matrix
+    int resultMatrix[ROWS][COLS];           // Result matrix
+
+    // Add matrices matrix1 and matrix2
+    addMatrices(matrix1, matrix2, resultMatrix);
+
+    // Display matrix1
+    printf("Matrix 1:\n");
+    displayMatrix(matrix1);
+
+    printf("\n");
+
+    // Display matrix2
+    printf("Matrix 2:\n");
+    displayMatrix(matrix2);
+
+    printf("\n");
+
+    // Display the result of matrix addition
+    printf("Sum of matrices:\n");
+    displayMatrix(resultMatrix);
+
+    return 0;
+}
