@@ -1,3 +1,109 @@
+//11bst
+#include <stdio.h>
+#include <stdlib.h>
+struct bst{
+    int data;
+    struct bst*left;
+    struct bst*right;
+};
+
+
+struct bst*new_node(int val){
+    struct bst*temp;
+    temp=(struct bst*)malloc(sizeof(struct bst));
+    temp->data=val;
+    temp->left=NULL;
+    temp->right=NULL;
+
+    return temp;
+
+};
+struct bst*insert(struct bst*root,int val){
+
+    if(root==NULL ) return new_node(val);
+    if(root->data>val) root->left=insert(root->left,val);
+    else root->right=insert(root->right,val);
+    return root;
+};
+struct bst*create(){
+    struct bst*root=NULL;
+    int n;
+    int x;
+    printf("Entre the total number of nodes:");
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+            scanf("%d",&x);
+        root=insert(root,x);
+    }
+    return root;
+};
+
+void preorder(struct bst*root){
+    if(root==NULL) return ;
+    printf("%d ->",root->data);
+
+    preorder(root->left);
+
+    preorder(root->right);
+    
+}
+void inorder(struct bst*root){
+    if(root==NULL) return ;
+    preorder(root->left);
+    printf("%d ->",root->data);
+    preorder(root->right);
+    
+}
+void postorder(struct bst*root){
+    if(root==NULL) return ;
+    preorder(root->left);
+    preorder(root->right);
+    printf("%d ->",root->data);    
+}
+
+int main()
+{
+    struct bst*root=NULL;
+    int ch;
+    printf("Entre the choice :");
+    while(1){
+            printf("1.create 2.insert 3.preorder");
+            scanf("%d",&ch);
+            switch(ch){
+                case 1:
+                root=create();
+                break;
+            case 2:
+                insert(root,100);
+                break;
+            case 3:
+                preorder(root);
+                break;
+            case 4:
+                inorder(root);
+                break;
+            case 4:
+                postorder(root);
+                break;
+            default: printf("Wrong");
+            break;
+            }
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
 //10.queue using link list;
 #include<stdio.h>
 #include<stdlib.h>
@@ -81,6 +187,13 @@ int main(){
     }
     return 0;
 }
+
+
+
+
+
+
+
 //9.string reversal
    
 #include<stdio.h>
@@ -127,6 +240,82 @@ char pop(){
 
 
  }
+
+
+
+
+using link list;
+#include <stdio.h>
+#include <stdlib.h>
+
+ struct node{
+    int data;
+    struct node *link;
+};
+ struct node *top=NULL;
+
+void push(int x){
+    printf("enter the data");
+    scanf("%d",&x);
+    struct node *New=malloc(sizeof(struct node));
+    New->data=x;
+    New->link=top;
+    top=New;
+}
+
+void pop(){
+    if(top==NULL){
+        printf("stack is empty");
+    }
+    else{
+        int x=top->data;
+        printf("poped element %d\t",x);
+        top=top->link;
+    }
+}
+
+void display(){
+    struct node*temp=top;
+   
+    while(temp!=NULL){
+        printf("%d->",temp->data);
+        temp=temp->link;
+    }
+    
+}
+
+int main(){
+    int x,choice;
+
+    while(1){
+    printf("\n 1.insert\t2.delete\t 3.display\t 4.Exit\n");
+    printf("Enter your choice ");
+    scanf("%d",&choice);
+
+    switch (choice){
+        case 1:
+        push(x);
+        break;
+
+        case 2: pop();
+        break;
+
+        case 3:display();
+        break;
+
+        case 4:
+        break;
+
+        default: printf("invalid choice");
+        break;
+    }
+    }
+    return 0;
+}
+
+
+
+
 //8.student database
 #include <stdio.h>
 #include <string.h>
@@ -242,6 +431,10 @@ int main() {
     
     return 0;
 }
+
+
+
+
 //7.star
 #include <stdio.h>
 
@@ -261,6 +454,10 @@ int main(){
     }
     return 0;
 }
+
+
+
+
 
 
 //extra matrices
@@ -315,3 +512,4 @@ int main() {
 
     return 0;
 }
+
