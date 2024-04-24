@@ -1,35 +1,36 @@
 //11bst
+
 #include <stdio.h>
 #include <stdlib.h>
-struct bst{
+typedef struct bst{
     int data;
     struct bst*left;
     struct bst*right;
+}b;
+
+
+b*new_node(int x){
+    b*new;
+    new=(b*)xloc(sizeof(b));
+    new->data=x;
+    new->left=NULL;
+    new->right=NULL;
+
+    return new;
+
 };
+b*insert(b*root,int x){
 
-
-struct bst*new_node(int val){
-    struct bst*temp;
-    temp=(struct bst*)malloc(sizeof(struct bst));
-    temp->data=val;
-    temp->left=NULL;
-    temp->right=NULL;
-
-    return temp;
-
-};
-struct bst*insert(struct bst*root,int val){
-
-    if(root==NULL ) return new_node(val);
-    if(root->data>val) root->left=insert(root->left,val);
-    else root->right=insert(root->right,val);
+    if(root==NULL ) return new_node(x);
+    if(root->data>x) root->left=insert(root->left,x);
+    else root->right=insert(root->right,x);
     return root;
 };
-struct bst*create(){
-    struct bst*root=NULL;
+b*create(){
+    b*root=NULL;
     int n;
     int x;
-    printf("Entre the total number of nodes:");
+    printf("Entre the tox number of nodes:");
     scanf("%d",&n);
     for(int i=0;i<n;i++){
             scanf("%d",&x);
@@ -38,7 +39,7 @@ struct bst*create(){
     return root;
 };
 
-void preorder(struct bst*root){
+void preorder(b*root){
     if(root==NULL) return ;
     printf("%d ->",root->data);
 
@@ -47,14 +48,14 @@ void preorder(struct bst*root){
     preorder(root->right);
     
 }
-void inorder(struct bst*root){
+void inorder(b*root){
     if(root==NULL) return ;
     preorder(root->left);
     printf("%d ->",root->data);
     preorder(root->right);
     
 }
-void postorder(struct bst*root){
+void postorder(b*root){
     if(root==NULL) return ;
     preorder(root->left);
     preorder(root->right);
@@ -63,11 +64,11 @@ void postorder(struct bst*root){
 
 int main()
 {
-    struct bst*root=NULL;
+    b*root=NULL;
     int ch;
     printf("Entre the choice :");
     while(1){
-            printf("1.create 2.insert 3.preorder");
+            printf("1.create 2.insert 3.preorder 4.inorder 5.postorder");
             scanf("%d",&ch);
             switch(ch){
                 case 1:
@@ -82,7 +83,7 @@ int main()
             case 4:
                 inorder(root);
                 break;
-            case 4:
+            case 5:
                 postorder(root);
                 break;
             default: printf("Wrong");
@@ -93,10 +94,6 @@ int main()
 
 
 }
-
-
-
-
 
 
 
@@ -461,55 +458,70 @@ int main(){
 
 
 //extra matrices
+
 #include <stdio.h>
 
-#define ROWS 1
-#define COLS 3
-
-// Function to add two 1x3 matrices
-void addMatrices(int mat1[ROWS][COLS], int mat2[ROWS][COLS], int result[ROWS][COLS]) {
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLS; j++) {
-            // Add corresponding elements from mat1 and mat2
-            result[i][j] = mat1[i][j] + mat2[i][j];
+// Function to read a matrix from the user
+void readMatrix(int rows, int cols, int matrix[][cols]) {
+    printf("Enter elements of the matrix:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            scanf("%d", &matrix[i][j]);
         }
     }
 }
 
-// Function to display a 1x3 matrix
-void displayMatrix(int mat[ROWS][COLS]) {
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLS; j++) {
-            printf("%d\t", mat[i][j]);
+// Function to display a matrix
+void displayMatrix(int rows, int cols, int matrix[][cols]) {
+    printf("Matrix:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            printf("%d\t", matrix[i][j]);
         }
         printf("\n");
     }
 }
 
+// Function to add two matrices
+void addMatrices(int rows, int cols, int mat1[][cols], int mat2[][cols], int result[][cols]) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            result[i][j] = mat1[i][j] + mat2[i][j];
+        }
+    }
+}
+
 int main() {
-    int matrix1[ROWS][COLS] = {{1, 2, 3}};  // 1x3 matrix
-    int matrix2[ROWS][COLS] = {{4, 5, 6}};  // 1x3 matrix
-    int resultMatrix[ROWS][COLS];           // Result matrix
+    int rows, cols;
 
-    // Add matrices matrix1 and matrix2
-    addMatrices(matrix1, matrix2, resultMatrix);
+    printf("Enter number of rows and columns for the matrices: ");
+    scanf("%d %d", &rows, &cols);
 
-    // Display matrix1
-    printf("Matrix 1:\n");
-    displayMatrix(matrix1);
+    int matrix1[rows][cols];
+    int matrix2[rows][cols];
+    int result[rows][cols];
 
-    printf("\n");
+    printf("Enter elements for the first matrix:\n");
+    readMatrix(rows, cols, matrix1);
 
-    // Display matrix2
-    printf("Matrix 2:\n");
-    displayMatrix(matrix2);
+    printf("Enter elements for the second matrix:\n");
+    readMatrix(rows, cols, matrix2);
 
-    printf("\n");
+    // Add the matrices
+    addMatrices(rows, cols, matrix1, matrix2, result);
 
-    // Display the result of matrix addition
-    printf("Sum of matrices:\n");
-    displayMatrix(resultMatrix);
+    // Display the matrices and their sum
+    printf("\nMatrix 1:\n");
+    displayMatrix(rows, cols, matrix1);
+
+    printf("\nMatrix 2:\n");
+    displayMatrix(rows, cols, matrix2);
+
+    printf("\nSum of the matrices:\n");
+    displayMatrix(rows, cols, result);
 
     return 0;
+}
+
 }
 
